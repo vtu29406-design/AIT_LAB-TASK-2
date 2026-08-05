@@ -1,0 +1,7 @@
+new_matrix = [
+    [5, 6],
+    [7, 8]
+]
+print("New 2x2 Matrix:")
+for row in new_matrix:
+    print(row)
