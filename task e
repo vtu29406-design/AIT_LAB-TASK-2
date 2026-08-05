@@ -1,0 +1,35 @@
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.children = []
+
+    def add_child(self, child_node):
+        self.children.append(child_node)
+
+    def __repr__(self):
+        return f"Node({self.value})"
+
+# Create individual nodes
+root_node = Node("Root")
+child1 = Node("Child 1")
+child2 = Node("Child 2")
+grandchild1 = Node("Grandchild 1")
+grandchild2 = Node("Grandchild 2")
+
+# Build the tree structure by linking nodes
+root_node.add_child(child1)
+root_node.add_child(child2)
+child1.add_child(grandchild1)
+child2.add_child(grandchild2)
+
+print("Individual Nodes Created and Linked:")
+print(f"Root Node: {root_node}")
+print(f"Child 1: {child1}")
+print(f"Child 2: {child2}")
+print(f"Grandchild 1: {grandchild1}")
+print(f"Grandchild 2: {grandchild2}")
+
+print("\nAccessing tree structure:")
+print(f"Root children: {root_node.children}")
+print(f"Child 1 children: {child1.children}")
+print(f"Child 2 children: {child2.children}")
