@@ -1,0 +1,37 @@
+from collections import deque
+
+graph = {
+    "master": ["e1", "e2"],
+    "e1": ["e3", "e4"],
+    "e2": ["e5"]
+}
+
+offline = {"e4"}
+visited = set()
+queue = deque([("master", 0)]) # Use a tuple for node and time
+failed = []
+max_time = 0 # Use underscore for variable names instead of hyphen
+
+while queue:
+  node, time = queue.popleft() # Corrected to popleft()
+
+  if node in visited:
+    continue
+
+  visited.add(node)
+
+  if node in offline: # Added colon
+    failed.append(node)
+    continue # If offline, don't process further
+
+  print(node, "received at", time, "sec") # Corrected print syntax and typo 'recieved'
+  max_time = max(max_time, time)
+
+  # Check if node exists in graph before iterating over its neighbors
+  if node in graph:
+    for neighbour in graph[node]: # Added colon
+      if neighbour not in visited: # Added colon
+        queue.append((neighbour, time + 1)) # Corrected append syntax and increment operator
+
+print("minimum time", max_time, "seconds")
+print("offline servers!", failed)
