@@ -1,0 +1,28 @@
+treasure = 8
+current = 2
+
+print("Treasure position:", treasure)
+print("Starting position:", current)
+
+while current != treasure:
+  left = current - 1
+  right = current + 1
+
+  current_distance = abs(treasure - current)
+  left_distance = abs(treasure - left)
+  right_distance = abs(treasure - right)
+
+  if left_distance < current_distance:
+    current = left
+  elif right_distance < current_distance:
+    current = right
+  else:
+    
+    if current_distance == 0:
+      break 
+    print("No better move found, assuming treasure is here or stuck.")
+    break
+
+  print("Move to:", current)
+
+print("Treasure found!")
