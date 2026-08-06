@@ -1,0 +1,11 @@
+from collections import deque
+graph ={
+    'A' :['B','C'],
+    'B' :[],
+    'C' :[]
+}
+visited = set()
+queue = deque()
+start ='A'
+queue.append(start)
+print("bfs traversal")
