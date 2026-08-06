@@ -1,0 +1,15 @@
+graph ={
+    'A' :['B','C'],
+    'B' :[],
+    'C' :[]
+}
+visited = set()
+def dfs (node):
+  if node not in visited:
+    print (node, end=" ")
+    visited.add (node)
+    for neighbour in graph [node]:
+      dfs(neighbour)
+
+print ("dfs traversals")
+dfs ('A')
