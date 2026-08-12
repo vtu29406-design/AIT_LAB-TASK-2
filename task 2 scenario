@@ -1,0 +1,51 @@
+from collections import deque
+
+def find_path(rows, cols, start, end):
+    queue = deque([start])
+    visited = {start}
+    parent = {start: None}
+
+    directions = [
+        (1, 0),   # down
+        (-1, 0),  # up
+        (0, 1),   # right
+        (0, -1)   # left
+    ]
+
+    while queue:
+        current = queue.popleft()
+
+        if current == end:
+            break
+
+        r, c = current
+
+        for dr, dc in directions:
+            nr, nc = r + dr, c + dc
+            next_cell = (nr, nc)
+
+            if 0 <= nr < rows and 0 <= nc < cols:
+                if next_cell not in visited:
+                    visited.add(next_cell)
+                    parent[next_cell] = current
+                    queue.append(next_cell)
+
+    # Reconstruct path
+    if end not in parent:
+        return []
+
+    path = []
+    current = end
+
+    while current is not None:
+        path.append(current)
+        current = parent[current]
+
+    path.reverse()
+    return path
+
+
+path = find_path(3, 3, (0, 0), (1, 2))
+
+print("Path:", path)
+print("Path length:", len(path) - 1)
