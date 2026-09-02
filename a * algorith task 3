@@ -1,0 +1,57 @@
+import heapq
+
+def heuristic(a, b):
+    """Manhattan distance heuristic for a 2D grid."""
+    return abs(a[0] - b[0]) + abs(a[1] - b[1])
+
+def a_star_shortest_path(grid, start, goal):
+    rows, cols = len(grid), len(grid[0])
+    open_set = [(0, start, [start])]  # (f_cost, current_node, path_so_far)
+    g_costs = {start: 0}
+
+    while open_set:
+        f_cost, current_node, path_so_far = heapq.heappop(open_set)
+
+        if current_node == goal:
+            return path_so_far
+
+        for dr, dc in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # 4 directions
+            neighbor = (current_node[0] + dr, current_node[1] + dc)
+
+            # Check bounds and obstacles
+            if not (0 <= neighbor[0] < rows and 0 <= neighbor[1] < cols) or grid[neighbor[0]][neighbor[1]] == 1:
+                continue
+
+            new_g_cost = g_costs[current_node] + 1  # Cost to move is 1
+
+            if new_g_cost < g_costs.get(neighbor, float('inf')):
+                g_costs[neighbor] = new_g_cost
+                f_cost = new_g_cost + heuristic(neighbor, goal)
+                new_path = path_so_far + [neighbor]
+                heapq.heappush(open_set, (f_cost, neighbor, new_path))
+
+    return None  # No path found
+
+# --- Example Usage ---
+# Grid: 0 = traversable, 1 = obstacle
+grid = [
+    [0, 0, 0, 0],
+    [0, 1, 0, 0],
+    [0, 0, 0, 0]
+]
+
+start_node = (0, 0)
+goal_node = (2, 3)
+
+print("Grid:")
+for row in grid:
+    print(row)
+print(f"Start: {start_node}, Goal: {goal_node}")
+
+path = a_star_shortest_path(grid, start_node, goal_node)
+
+if path:
+    print(f"\nOptimal path: {path}")
+    print(f"Path length: {len(path) - 1}") # Number of steps
+else:
+    print("\nNo path found.")
